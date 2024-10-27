@@ -1,8 +1,21 @@
 package br.edu.infnet.erik.model.domain;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "TTitulo")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Titulo {
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
+
+    @ManyToOne
+    @JoinColumn(name = "stakeholder_id")
     private Stakeholder stakeholder;
 
     public long getId() {
