@@ -1,5 +1,6 @@
 package br.edu.infnet.erik.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -14,9 +15,13 @@ public class Empresa {
     private Long id;
     private String cnpj;
     private String nome;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "empresa_id")
+    @JsonManagedReference
     private List<Titulo> titulos;
 
     public Empresa() {
@@ -53,5 +58,13 @@ public class Empresa {
 
     public Long getId() {
         return id;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 }

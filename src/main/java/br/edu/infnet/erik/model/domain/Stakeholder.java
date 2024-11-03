@@ -1,5 +1,6 @@
 package br.edu.infnet.erik.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -15,8 +16,12 @@ public class Stakeholder {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "stakeholder_id")
+    @JsonManagedReference
     private List<Titulo> titulos;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
     @Enumerated(EnumType.STRING)
     private TipoPessoa tipoPessoa;
     private String cadastroPessoa;
@@ -63,5 +68,13 @@ public class Stakeholder {
 
     public void setTitulos(List<Titulo> titulos) {
         this.titulos = titulos;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 }

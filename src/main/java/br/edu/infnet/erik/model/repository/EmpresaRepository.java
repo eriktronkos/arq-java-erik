@@ -4,7 +4,13 @@ import br.edu.infnet.erik.model.domain.Empresa;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface EmpresaRepository extends CrudRepository<Empresa, Integer> {
 
+    List<Empresa> findByNomeContaining(String nome);
+
+    Optional<Empresa> findByCnpj(String cnpj);
 }

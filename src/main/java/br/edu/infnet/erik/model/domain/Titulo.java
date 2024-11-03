@@ -1,5 +1,6 @@
 package br.edu.infnet.erik.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,9 +13,11 @@ public class Titulo {
 
     @ManyToOne
     @JoinColumn(name = "empresa_id")
+    @JsonBackReference
     private Empresa empresa;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "stakeholder_id")
     private Stakeholder stakeholder;
 

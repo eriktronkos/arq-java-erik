@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StakeholderRepository extends CrudRepository<Stakeholder, Integer> {
 
+    Stakeholder findByCadastroPessoa(String cadastroPessoa);
 }
