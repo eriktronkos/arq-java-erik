@@ -1,5 +1,7 @@
 package br.edu.infnet.erik.model.service;
 
+import br.edu.infnet.erik.Constants;
+import br.edu.infnet.erik.exceptions.NaoEncontradoException;
 import br.edu.infnet.erik.model.domain.Empresa;
 import br.edu.infnet.erik.model.domain.Endereco;
 import br.edu.infnet.erik.model.repository.EmpresaRepository;
@@ -26,8 +28,24 @@ public class EmpresaService {
         return empresaRepository.save(empresa);
     }
 
-    public void excluir(Integer id) {
+    public Empresa alterar(Empresa empresa) {
+
+        String cep = empresa.getEndereco().getCep();
+
+        Endereco endereco = localizacaoService.findByCep(cep);
+
+        Empresa empresaExistente = empresaRepository.findById(empresa.getId()).orElseThrow(() -> new NaoEncontradoException(Constants.MSG_EMPRESA_NOT_FOUND));
+
+        endereco.setId(empresaExistente.getEndereco().getId());
+        empresa.setEndereco(endereco);
+        empresa.setTitulos(empresaExistente.getTitulos());
+        return empresaRepository.save(empresa);
+    }
+
+    public boolean excluir(Long id) {
         empresaRepository.deleteById(id);
+
+        return true;
     }
 
     public Collection<Empresa> obterLista(){
@@ -42,8 +60,8 @@ public class EmpresaService {
         return empresaRepository.count();
     }
 
-    public Empresa obterPorId(Integer id) {
-        return empresaRepository.findById(id).orElse(null);
+    public Empresa obterPorId(Long id) {
+        return empresaRepository.findById(id).orElseThrow(() -> new NaoEncontradoException(Constants.MSG_EMPRESA_NOT_FOUND));
     }
 
     public Empresa obterPorCpnj(String cnpj) { return empresaRepository.findByCnpj(cnpj).orElse(null) ;}

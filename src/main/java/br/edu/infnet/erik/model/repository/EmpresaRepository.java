@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EmpresaRepository extends CrudRepository<Empresa, Integer> {
+public interface EmpresaRepository extends CrudRepository<Empresa, Long> {
 
     List<Empresa> findByNomeContaining(String nome);
 

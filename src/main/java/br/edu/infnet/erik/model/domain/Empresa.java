@@ -1,7 +1,8 @@
 package br.edu.infnet.erik.model.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,14 @@ public class Empresa {
     private Long id;
     private String cnpj;
     private String nome;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     @JoinColumn(name = "empresa_id")
-    @JsonManagedReference
+    @JsonIdentityReference(alwaysAsId = true)
     private List<Titulo> titulos;
 
     public Empresa() {

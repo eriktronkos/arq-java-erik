@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TituloService {
@@ -19,6 +20,19 @@ public class TituloService {
 	}
 
 	public List<Titulo> obterLista(){
+		return this.obterLista(null, null);
+	}
+	public List<Titulo> obterLista(Long empresaId, Long stakeholderId){
+
+		if (!Objects.isNull(empresaId)) {
+			if (!Objects.isNull(stakeholderId)) {
+				return  tituloRepository.findByEmpresaIdAndStakeholderId(empresaId, stakeholderId);
+			}
+			return  tituloRepository.findByEmpresaId(empresaId);
+		}
+		if (!Objects.isNull(stakeholderId)) {
+			return  tituloRepository.findByStakeholderId(stakeholderId);
+		}
 		return (List<Titulo>) tituloRepository.findAll();
 	}
 

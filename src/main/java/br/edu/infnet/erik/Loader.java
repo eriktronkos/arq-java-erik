@@ -56,7 +56,7 @@ public class Loader implements ApplicationRunner {
                     stakeholder.setTipoPessoa(TipoPessoa.valueOf(campos[1]));
                     stakeholder.setCadastroPessoa(campos[2]);
                     stakeholder.setNome(campos[3]);
-                    stakeholder.setEndereco(new Endereco(campos[3]));
+                    stakeholder.setEndereco(new Endereco(campos[4]));
 
                     stakeholderService.incluir(stakeholder);
 

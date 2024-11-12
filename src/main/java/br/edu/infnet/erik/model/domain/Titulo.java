@@ -1,6 +1,6 @@
 package br.edu.infnet.erik.model.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,12 +13,14 @@ public class Titulo {
 
     @ManyToOne
     @JoinColumn(name = "empresa_id")
-    @JsonBackReference
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Empresa empresa;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "stakeholder_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Stakeholder stakeholder;
 
     public long getId() {
